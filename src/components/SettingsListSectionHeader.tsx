@@ -1,18 +1,19 @@
 import { useState } from "react"
-import { View, Text, SafeAreaView, StyleSheet, Pressable, TextInput } from "react-native"
+import { View, Text } from "react-native"
 
 interface IProps {
-  // icon: JSX.Element
+  icon: JSX.Element
   title: string
 }
-const SettingsListItem = (props: IProps) => {
-  const { title } = props
+const SettingsListSectionHeader = (props: IProps) => {
+  const { icon, title } = props
   return (
-    <SafeAreaView>
-      <Text>{title}</Text>
-    </SafeAreaView>
+    <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', marginTop: 32, marginBottom: 24 }}>
+      {icon}
+      <Text style={{ marginLeft: 16, fontWeight: '600' }}>{title}</Text>
+    </View>
 
   )
 }
 
-export default SettingsListItem
+export default SettingsListSectionHeader

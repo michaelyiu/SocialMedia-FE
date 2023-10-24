@@ -1,1 +1,1 @@
-export type TMenuItem = 'profile' | 'experience' | 'education' | 'logout'
+export type TMenuItem = 'Profile' | 'Experience' | 'Education' | 'Logout'
