@@ -1,10 +1,14 @@
 import { useState } from "react"
 import { View, Text, SafeAreaView, StyleSheet, Pressable, TextInput } from "react-native"
-
-const Test = () => {
+import gql from 'graphql-tag'
+import { useQuery } from "@apollo/client"
+import { USERS_QUERY } from "./UserQuery"
+const Signup = () => {
   const [email, onEmailChange] = useState('s')
   const [password, onPasswordChange] = useState('')
   const [password2, onPassword2Change] = useState('')
+  const { data, loading, error } = useQuery(USERS_QUERY)
+  console.log(data)
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.inputText}>
@@ -87,4 +91,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default Test
+export default Signup
