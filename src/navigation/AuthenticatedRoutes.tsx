@@ -1,21 +1,22 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import PostSplash from '../screens/PostSplash'
-import Signup from '../screens/Signup'
-import Login from '../screens/Login'
+import Dashboard from '../screens/Dashboard'
 import { Image } from 'react-native'
+import Icon from 'react-native-vector-icons/Octicons'
+import { useNavigation } from '@react-navigation/native'
+
 
 const RootStack = createNativeStackNavigator()
-
-const UnauthenticatedRoutes = () => {
+const AuthenticatedRoutes = () => {
+  const navigation = useNavigation()
   return (
-    <RootStack.Navigator initialRouteName='postsplash'
-
+    <RootStack.Navigator initialRouteName='dashboard'
       screenOptions={{
         headerShown: true,
         headerStyle: { backgroundColor: '#FB5B5A' },
         headerTintColor: 'white',
         headerBackTitleStyle: { fontSize: 2 },
         headerBackTitleVisible: false,
+        headerRight: () => <Icon name='three-bars' size={30} color='#000' onPress={() => navigation.navigate('HeaderDrawer')} />,
         headerTitle: () => (
           <Image
             resizeMode='center'
@@ -27,11 +28,9 @@ const UnauthenticatedRoutes = () => {
         ),
       }}>
 
-      <RootStack.Screen name="postsplash" component={PostSplash} />
-      <RootStack.Screen name="signup" component={Signup} options={{ headerShown: true }} />
-      <RootStack.Screen name="login" component={Login} options={{ headerShown: true }} />
+      <RootStack.Screen name="dashboard" component={Dashboard} options={{ headerShown: true }} />
     </RootStack.Navigator >
   )
 }
 
-export default UnauthenticatedRoutes
+export default AuthenticatedRoutes
