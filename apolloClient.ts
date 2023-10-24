@@ -1,7 +1,24 @@
-import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { setContext } from "@apollo/client/link/context"
+
+const httpLink = createHttpLink({
+  uri: 'https://social-media-be-gules.vercel.app/graphql/'
+})
+
+const authLink = setContext(async (_, { headers }) => {
+  const token = await AsyncStorage.getItem('token')
+  console.log("🚀 ~ file: apolloClient.ts:10 ~ authLink ~ token:", token)
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : ''
+    }
+  }
+})
 
 const client = new ApolloClient({
-  uri: 'https://social-media-be-gules.vercel.app/graphql/',
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 

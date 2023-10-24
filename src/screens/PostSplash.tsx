@@ -5,7 +5,7 @@ const PostSplash = () => {
   const navigation = useNavigation()
   return (
     <SafeAreaView style={styles.container}>
-      <Pressable style={styles.button}>
+      <Pressable style={styles.button} onPress={() => navigation.navigate('login')}>
         <Text style={styles.text}>Login</Text>
       </Pressable>
       <Pressable style={styles.button} onPress={() => navigation.navigate('signup')}>

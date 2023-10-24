@@ -1,14 +1,15 @@
 import { useState } from "react"
 import { View, Text, SafeAreaView, StyleSheet, Pressable, TextInput } from "react-native"
-import { useMutation } from "@apollo/client"
+import { useMutation, useQuery } from "@apollo/client"
 import { LOGIN_MUTATION } from "./gql/LoginMutation"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { GET_USER_MUTATION } from "./gql/GetUserQuery"
 
 const Login = () => {
   const [email, onEmailChange] = useState('')
   const [password, onPasswordChange] = useState('')
 
-  const [login, { data, loading, error }] = useMutation(LOGIN_MUTATION, {
+  const [login] = useMutation(LOGIN_MUTATION, {
     variables: {
       input: {
         email,
@@ -17,12 +18,21 @@ const Login = () => {
     },
     onCompleted: async (newData) => {
       try {
-        await AsyncStorage.setItem("token", JSON.stringify(newData.token))
+        await AsyncStorage.setItem("token", JSON.stringify(newData.login.token))
       } catch (e) {
         console.error(e)
       }
     }
   })
+
+  const { data, loading, error } = useQuery(GET_USER_MUTATION, {
+    variables: {
+      email: 'ssd@gmail.com'
+    }
+  })
+
+  console.log("🚀 ~ file: Login.tsx:36 ~ Login ~ data:", data)
+  console.log("🚀 ~ file: Login.tsx:37 ~ Login ~ error:", error)
 
   return (
     <SafeAreaView style={styles.container}>
@@ -47,7 +57,7 @@ const Login = () => {
         />
       </View>
       <Pressable style={styles.button} onPress={() => login()}>
-        <Text style={styles.buttonText}>Signup</Text>
+        <Text style={styles.buttonText}>Login</Text>
       </Pressable>
     </SafeAreaView>
   )
