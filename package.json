@@ -7,9 +7,14 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
+    "codegen": "graphql-codegen",
+    "watch-codegen": "graphql-codegen -w",
     "test": "jest"
   },
   "dependencies": {
+    "@graphql-codegen/cli": "^5.0.0",
+    "@graphql-codegen/client-preset": "^4.1.0",
+    "@graphql-typed-document-node/core": "^3.2.0",
     "@react-navigation/bottom-tabs": "^6.5.2",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.7",
