@@ -1,36 +1,28 @@
 import { useState } from "react"
 import { View, Text, SafeAreaView, StyleSheet, Pressable, TextInput } from "react-native"
 import { useMutation } from "@apollo/client"
-import { SIGNUP_MUTATION } from "./gql/SignupMutation"
+import { LOGIN_MUTATION } from "./gql/LoginMutation"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
-
-const Signup = () => {
+const Login = () => {
   const [email, onEmailChange] = useState('')
-  const [name, onNameChange] = useState('')
   const [password, onPasswordChange] = useState('')
-  const [password2, onPassword2Change] = useState('')
-  // const { data, loading, error } = useQuery(USERS_QUERY)
-  const [signup, { data, loading, error }] = useMutation(SIGNUP_MUTATION, {
+
+  const [login, { data, loading, error }] = useMutation(LOGIN_MUTATION, {
     variables: {
       input: {
         email,
-        name,
         password,
-        password2
       }
     },
-    // onCompleted: async (newData) => {
-    //   try {
-    //     await AsyncStorage.setItem("userToken", JSON.stringify(newData.token))
-    //   } catch (e) {
-    //     console.error(e)
-    //   }
-    // }
+    onCompleted: async (newData) => {
+      try {
+        await AsyncStorage.setItem("token", JSON.stringify(newData.token))
+      } catch (e) {
+        console.error(e)
+      }
+    }
   })
-
-  const addUser = () => {
-    signup()
-  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -45,16 +37,6 @@ const Signup = () => {
         />
       </View>
       <Text style={styles.inputText}>
-        Name
-      </Text>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          onChangeText={onNameChange}
-          value={name}
-        />
-      </View>
-      <Text style={styles.inputText}>
         Password
       </Text>
       <View style={styles.inputContainer}>
@@ -64,17 +46,7 @@ const Signup = () => {
           value={password}
         />
       </View>
-      <Text style={styles.inputText}>
-        Confirm Password
-      </Text>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          onChangeText={onPassword2Change}
-          value={password2}
-        />
-      </View>
-      <Pressable style={styles.button} onPress={() => addUser()}>
+      <Pressable style={styles.button} onPress={() => login()}>
         <Text style={styles.buttonText}>Signup</Text>
       </Pressable>
     </SafeAreaView>
@@ -123,4 +95,5 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Signup
+
+export default Login
