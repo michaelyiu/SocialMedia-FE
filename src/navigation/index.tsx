@@ -33,16 +33,14 @@ const RootNavigator = () => {
           ),
         }}
       >
-
         {
           token !== null ?
             (
               <RootStack.Screen name="tabnav" component={BottomTabNavigator} options={{ headerShown: false }} />
 
             ) :
-            (<UnauthenticatedRoutes />)
+            (<RootStack.Screen name="postsplash" component={UnauthenticatedRoutes} />)
         }
-        <RootStack.Screen name="profile" component={Profile} />
       </RootStack.Navigator>
     </NavigationContainer >
   )

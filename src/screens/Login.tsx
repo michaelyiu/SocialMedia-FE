@@ -2,8 +2,8 @@ import { useState } from "react"
 import { View, Text, SafeAreaView, StyleSheet, Pressable, TextInput } from "react-native"
 import { useMutation, useQuery } from "@apollo/client"
 import { LOGIN_MUTATION } from "./gql/LoginMutation"
+import { GET_USER_QUERY } from "./gql/GetUserQuery"
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { GET_USER_MUTATION } from "./gql/GetUserQuery"
 
 const Login = () => {
   const [email, onEmailChange] = useState('')
@@ -19,15 +19,16 @@ const Login = () => {
     onCompleted: async (newData) => {
       try {
         await AsyncStorage.setItem("token", JSON.stringify(newData.login.token))
+        await AsyncStorage.setItem("email", JSON.stringify(newData.login.email))
       } catch (e) {
         console.error(e)
       }
     }
   })
 
-  const { data, loading, error } = useQuery(GET_USER_MUTATION, {
+  const { data, loading, error } = useQuery(GET_USER_QUERY, {
     variables: {
-      email: 'ssd@gmail.com'
+      email: email
     }
   })
 

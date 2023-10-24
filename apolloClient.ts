@@ -8,7 +8,6 @@ const httpLink = createHttpLink({
 
 const authLink = setContext(async (_, { headers }) => {
   const token = await AsyncStorage.getItem('token')
-  console.log("🚀 ~ file: apolloClient.ts:10 ~ authLink ~ token:", token)
   return {
     headers: {
       ...headers,
