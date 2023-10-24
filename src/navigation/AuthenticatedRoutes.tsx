@@ -1,5 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Dashboard from '../screens/Dashboard'
+import Profile from '../screens/Profile'
 import { Image } from 'react-native'
 import Icon from 'react-native-vector-icons/Octicons'
 import { useNavigation } from '@react-navigation/native'
@@ -28,7 +29,7 @@ const AuthenticatedRoutes = () => {
         ),
       }}>
 
-      <RootStack.Screen name="dashboard" component={Dashboard} options={{ headerShown: true }} />
+      <RootStack.Screen name="profile" component={Profile} options={{ headerShown: true }} />
     </RootStack.Navigator >
   )
 }

@@ -8,29 +8,12 @@ const RootStack = createNativeStackNavigator()
 
 const UnauthenticatedRoutes = () => {
   return (
-    <RootStack.Navigator initialRouteName='postsplash'
 
-      screenOptions={{
-        headerShown: true,
-        headerStyle: { backgroundColor: '#FB5B5A' },
-        headerTintColor: 'white',
-        headerBackTitleStyle: { fontSize: 2 },
-        headerBackTitleVisible: false,
-        headerTitle: () => (
-          <Image
-            resizeMode='center'
-            style={{
-              width: 20, height: 20, backgroundColor: '#FB5B5A'
-            }}
-            source={require('../assets/ios/rocket-lunch.png')}
-          />
-        ),
-      }}>
-
+    <>
       <RootStack.Screen name="postsplash" component={PostSplash} />
       <RootStack.Screen name="signup" component={Signup} options={{ headerShown: true }} />
       <RootStack.Screen name="login" component={Login} options={{ headerShown: true }} />
-    </RootStack.Navigator >
+    </>
   )
 }
 
