@@ -1,6 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import Dashboard from "../screens/Dashboard"
-import Profile from "../screens/Profile"
 import Settings from "../screens/Settings"
 import { Image } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -26,11 +25,6 @@ const BottomTabNavigator = () => {
         tabBarActiveBackgroundColor: '#FB5B5A'
       }}>
       <Tab.Screen name="Dashboard" component={Dashboard} options={{
-        tabBarIcon: ({ }) => (
-          <Icon name="mobile-phone" size={30} />
-        )
-      }} />
-      <Tab.Screen name="Profile" component={Profile} options={{
         tabBarIcon: ({ }) => (
           <Icon name="mobile-phone" size={30} />
         )

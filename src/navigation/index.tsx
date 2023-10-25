@@ -40,6 +40,7 @@ const RootNavigator = () => {
               <>
                 <RootStack.Screen name="tabnav" component={BottomTabNavigator} options={{ headerShown: false }} />
                 <RootStack.Screen name="create-profile" component={CreateProfile} options={{ headerShown: true }} />
+                <RootStack.Screen name="profile" component={Profile} options={{ headerShown: true }} />
               </>
 
             ) :
