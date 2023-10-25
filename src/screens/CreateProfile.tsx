@@ -1,13 +1,10 @@
-import { SetStateAction, useEffect, useState, useContext } from "react";
-import { View, Text, SafeAreaView, StyleSheet, Pressable, TextInput, TouchableOpacity } from "react-native"
-import { useMutation, useQuery } from "@apollo/client"
-// import { GET_POSTS_QUERY } from "./gql/GetPostsQuery"
-import { GET_PROFILE_QUERY } from "./gql/GetProfileQuery";
-import { GET_USER_QUERY as GET_CURRENT_USER_QUERY } from "./gql/GetUserQuery"
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native"
+import { useState, } from "react";
+import { View, Text, SafeAreaView, StyleSheet, TextInput, TouchableOpacity } from "react-native"
+import { useMutation } from "@apollo/client"
 import { useForm } from "../hooks/useForm";
 import { UPDATE_PROFILE_MUTATION } from "./gql/UpdateProfileMutation";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
 
 const _ = require('lodash');
 
@@ -21,13 +18,6 @@ const CreateProfile = () => {
     skills: [],
     githubUsername: '',
     bio: '',
-    social: {
-      twitter: '',
-      facebook: '',
-      linkedin: '',
-      youtube: '',
-      instagram: ''
-    }
   });
 
 
@@ -44,11 +34,6 @@ const CreateProfile = () => {
     skills: !_.isEmpty(profile.skills) ? profile.skills.join(',') : '',
     githubUsername: !_.isEmpty(profile) ? profile.githubUsername : '',
     bio: !_.isEmpty(profile.bio) ? profile.bio : '',
-    twitter: !_.isEmpty(profile.social.twitter) ? profile.social.twitter : '',
-    facebook: !_.isEmpty(profile.social.facebook) ? profile.social.facebook : '',
-    linkedin: !_.isEmpty(profile.social.linkedin) ? profile.social.linkedin : '',
-    youtube: !_.isEmpty(profile.social.youtube) ? profile.social.youtube : '',
-    instagram: !_.isEmpty(profile.social.instagram) ? profile.social.instagram : '',
     // errors: {}
   })
 
@@ -57,20 +42,16 @@ const CreateProfile = () => {
     {
       variables: values,
       onCompleted(data) {
-        console.log(data)
+        console.log("🚀 ~ file: CreateProfile.tsx:51 ~ onCompleted ~ data:", data)
         if (data && data.updateProfile) {
           setProfile(data.updateProfile);
-          setProfile(data.updateSocials);
         }
       }
     }
   )
   console.log("🚀 ~ file: CreateProfile.tsx:69 ~ CreateProfile ~ values:", values)
-  // const [handle, onHandleChange] = useState('')
-  // const [status, onStatusChange] = useState('')
-  // const [company, onCompanyChange] = useState('')
-  // const [website, onWebsiteChange] = useState('')
-
+  console.log("🚀 ~ file: CreateProfile.tsx:72 ~ CreateProfile ~ data:", data)
+  console.log("🚀 ~ file: CreateProfile.tsx:73 ~ CreateProfile ~ error:", error)
   // Select options for status
   // const options = [
   //   { label: '* Select Professional Status', value: 0, disabled: 'disabled' },
@@ -91,56 +72,123 @@ const CreateProfile = () => {
   //   { label: 'Receptionist', value: 'Receptionist' }
   // ];
 
+
   return (
-    <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Create your profile</Text>
-      <Text>Let's get some information to make your profile stand out!</Text>
-      <Text style={styles.inputText}>
-        Email
-      </Text>
-      <View style={styles.inputContainer}>
-        <TextInput
-          // style={styles.input}
-          onChangeText={(text) => handleChange('handle', text)}
-          value={values.handle}
-        />
-      </View>
-      <Text style={styles.inputText}>
-        Status
-      </Text>
-      <View style={styles.inputContainer}>
-        <TextInput
-          // style={styles.input}
-          onChangeText={(text) => handleChange('status', text)}
-          value={values.status}
-        />
-      </View>
-      <Text style={styles.inputText}>
-        Company
-      </Text>
-      <View style={styles.inputContainer}>
-        <TextInput
-          // style={styles.input}
-          onChangeText={(text) => handleChange('company', text)}
-          value={values.company}
-        />
-      </View>
-      <Text style={styles.inputText}>
-        Company
-      </Text>
-      <View style={styles.inputContainer}>
-        <TextInput
-          // style={styles.input}
-          onChangeText={(text) => handleChange('website', text)}
-          value={values.website}
-        />
-      </View>
-      {/* {CreateProfileContent} */}
-    </SafeAreaView >
-    // <TextInput
-    //     value={values.password}
-    //     onChangeText={(text) => handleChange('password', text)}
-    //   />
+    <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 25 }}>
+      <KeyboardAwareScrollView
+        keyboardShouldPersistTaps='handled'
+      >
+        <View style={{ margin: 25 }}>
+
+          <Text style={{ fontWeight: '600', fontSize: 20 }}>Create your profile</Text>
+          <Text style={{ marginTop: 5, marginBottom: 20 }}>Let's get some information to make your profile stand out!</Text>
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+
+
+            <Text style={styles.inputText}>
+              Handle
+            </Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                onChangeText={(text) => handleChange('handle', text)}
+                value={values.handle}
+                multiline
+                numberOfLines={1}
+              />
+            </View>
+            <Text style={styles.inputText}>
+              Status
+            </Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                onChangeText={(text) => handleChange('status', text)}
+                value={values.status}
+                multiline
+                numberOfLines={1}
+              />
+            </View>
+            <Text style={styles.inputText}>
+              Company
+            </Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                onChangeText={(text) => handleChange('company', text)}
+                value={values.company}
+                multiline
+                numberOfLines={1}
+              />
+            </View>
+            <Text style={styles.inputText}>
+              Website
+            </Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                onChangeText={(text) => handleChange('website', text)}
+                value={values.website}
+                multiline
+                numberOfLines={1}
+              />
+            </View>
+            <Text style={styles.inputText}>
+              Location
+            </Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                onChangeText={(text) => handleChange('location', text)}
+                value={values.location}
+                multiline
+                numberOfLines={1}
+              />
+            </View>
+            <Text style={styles.inputText}>
+              Skills
+            </Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                onChangeText={(text) => handleChange('skills', text)}
+                value={values.skills}
+                multiline
+                numberOfLines={1}
+              />
+            </View>
+            <Text style={styles.inputText}>
+              GitHub Username
+            </Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                onChangeText={(text) => handleChange('githubUsername', text)}
+                value={values.githubUsername}
+                multiline
+                numberOfLines={1}
+              />
+            </View>
+            <Text style={styles.inputText}>
+              Biography
+            </Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                onChangeText={(text) => handleChange('bio', text)}
+                value={values.bio}
+                multiline
+                numberOfLines={1}
+              />
+            </View>
+            <TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
+              <Text>Create</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+      </KeyboardAwareScrollView>
+    </SafeAreaView>
   )
 }
 
@@ -167,7 +215,6 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    height: 45,
     marginLeft: 16,
   },
   inputContainer: {
@@ -176,13 +223,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     flexDirection: 'row',
     height: 45,
+    paddingBottom: 8,
     marginBottom: 20,
-    width: 250,
+    width: '100%',
   },
   inputText: {
-    color: 'white',
-    marginBottom: 5,
-    width: 250,
+    color: 'black',
+    width: '100%',
   }
 })
 

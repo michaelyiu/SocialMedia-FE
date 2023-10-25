@@ -48,14 +48,12 @@ const Dashboard = () => {
     // TODO:  create 404 screen
   }
 
-  console.log("🚀 ~ file: Dashboard.tsx:46 ~ Dashboard ~ userProfile:", userProfile)
-  console.log("🚀 ~ file: Dashboard.tsx:47 ~ Dashboard ~ currentUserData:", currentUserData)
   let dashboardContent;
   if (currentUserLoading || userProfileLoading) {
     // TODO: create loading screen
   }
   else {
-    if (userProfile.profile && Object.keys(userProfile.profile).length > 0) {
+    if (userProfile && userProfile.profile && Object.keys(userProfile.profile).length > 0) {
     }
     else {
       dashboardContent = (
