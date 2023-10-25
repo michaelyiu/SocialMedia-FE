@@ -5,11 +5,13 @@ import { useQuery } from "@apollo/client"
 import { GET_PROFILE_QUERY } from "./gql/GetProfileQuery";
 import { GET_USER_QUERY as GET_CURRENT_USER_QUERY } from "./gql/GetUserQuery"
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/core"
 
 
 
 const Dashboard = () => {
   const [loggedInEmail, setEmail] = useState<SetStateAction<string | null | undefined>>('')
+  const navigation = useNavigation()
 
   const getEmail = async () => {
     try {
@@ -57,14 +59,16 @@ const Dashboard = () => {
     }
     else {
       dashboardContent = (
-        <>
-          {/* <Text>Welcome {currentUserData.user.name}</Text> */}
-          <TouchableOpacity>
-            <Text>
+        <View>
+          <View>
+            <Text style={{ fontWeight: '600', fontSize: 25 }}>Welcome {currentUserData && currentUserData.user && currentUserData.user.name}</Text>
+          </View>
+          <TouchableOpacity style={{ padding: 12, backgroundColor: '#FB5B5A', borderRadius: 8, marginTop: 24 }} onPress={() => navigation.navigate('create-profile')}>
+            <Text style={{ textAlign: 'center' }}>
               Create Profile
             </Text>
           </TouchableOpacity>
-        </>
+        </View>
       )
     }
   }
@@ -76,8 +80,7 @@ const Dashboard = () => {
   }, [loggedInEmail])
 
   return (
-    <SafeAreaView>
-      <Text>Dashboard</Text>
+    <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       {dashboardContent}
     </SafeAreaView>
 
