@@ -1,7 +1,6 @@
-import { SetStateAction, useEffect, useState, useContext } from "react";
-import { View, Text, SafeAreaView, StyleSheet, Pressable, TextInput, TouchableOpacity } from "react-native"
+import { SetStateAction, useEffect, useState } from "react";
+import { View, Text, SafeAreaView, TouchableOpacity } from "react-native"
 import { useQuery } from "@apollo/client"
-// import { GET_POSTS_QUERY } from "./gql/GetPostsQuery"
 import { GET_PROFILE_QUERY } from "./gql/GetProfileQuery";
 import { GET_USER_QUERY as GET_CURRENT_USER_QUERY } from "./gql/GetUserQuery"
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -21,7 +20,7 @@ const Dashboard = () => {
       console.log(e)
     }
   }
-  console.log("🚀 ~ file: Dashboard.tsx:41 ~ Dashboard ~ loggedInEmail:", loggedInEmail)
+
   const {
     data: currentUserData,
     loading: currentUserLoading,
@@ -54,6 +53,12 @@ const Dashboard = () => {
   }
   else {
     if (userProfile && userProfile.profile && Object.keys(userProfile.profile).length > 0) {
+      // show posts of all users
+      dashboardContent = (
+        <View>
+          <Text>So many posts</Text>
+        </View>
+      )
     }
     else {
       dashboardContent = (
